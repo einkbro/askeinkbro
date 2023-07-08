@@ -60,8 +60,10 @@ function AskGPT:init()
   -- DictQuickLookup.onHoldClose = function(self) 
   --   android.dictLookup(self.displayword, "info.plateaukao.einkbro", "text")
   --   end
+  local originalTweakButtonsFunc = DictQuickLookup.tweak_buttons_func
   DictQuickLookup.tweak_buttons_func = function(obj, buttons)
-    table.insert(buttons, 1, {{
+    originalTweakButtonsFunc(obj, buttons)
+    table.insert(buttons, #buttons + 1, {{
       text = _("Query EinkBro"),
       enabled = yes,
       callback = function()
