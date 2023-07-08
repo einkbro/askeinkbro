@@ -2,6 +2,12 @@
 
 Introducing AskEinkBro, a new plugin for KOReader that allows you to search about the parts of the book you're reading and see results in EinkBro in one step.
 
+## Demo
+
+
+https://github.com/einkbro/askeinkbro/assets/4084738/039cbc73-6080-4059-983c-4e2a60c4e33f
+
+
 ## Getting Started
 
 To use this plugin, You'll need to do a few things:
