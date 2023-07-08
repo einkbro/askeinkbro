@@ -14,4 +14,8 @@ If you clone this project, you should be able to rename the directory to `askein
 
 To use AskEinkBro, simply highlight the text that you want to search about, and select "Query EinkBro" from the menu. The plugin will then send your highlighted text to EinkBro, and display the web content.
 
+## Contributions to 
+It's referenced from [AskGPT](https://github.com/drewbaumann/AskGPT) plugin with some code study in Koreader project.
+
+
 License: GPLv3
