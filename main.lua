@@ -1,6 +1,7 @@
 local android = require("android")
 local Device = require("device")
 local InputContainer = require("ui/widget/container/inputcontainer")
+local DictQuickLookup = require("ui/widget/dictquicklookup")
 local _ = require("gettext")
 
 local AskGPT = InputContainer:new {
@@ -56,6 +57,19 @@ function AskGPT:init()
   end)
   Device.getExternalDictLookupList = getExternalDictLookupList
   Device.doExternalDictLookup = doExternalDictLookup
+  -- DictQuickLookup.onHoldClose = function(self) 
+  --   android.dictLookup(self.displayword, "info.plateaukao.einkbro", "text")
+  --   end
+  DictQuickLookup.tweak_buttons_func = function(obj, buttons)
+    table.insert(buttons, 1, {{
+      text = _("Query EinkBro"),
+      enabled = yes,
+      callback = function()
+        android.dictLookup(obj.displayword, "info.plateaukao.einkbro", "text")
+        obj:onClose()
+      end,
+    }})
+    end
 end
 
 return AskGPT
