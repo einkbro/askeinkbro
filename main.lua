@@ -76,7 +76,7 @@ function AskGPT:init()
               text = "Query EinkBro",
               enabled = true,
               callback = function()
-                  android.dictLookup(obj.displayword, "info.plateaukao.einkbro", "text")
+                  android.dictLookup(obj.word, "info.plateaukao.einkbro", "text")
                   obj:onClose()
               end,
           }
