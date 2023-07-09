@@ -63,15 +63,26 @@ function AskGPT:init()
   local originalTweakButtonsFunc = DictQuickLookup.tweak_buttons_func
   DictQuickLookup.tweak_buttons_func = function(obj, buttons)
     originalTweakButtonsFunc(obj, buttons)
-    table.insert(buttons, #buttons + 1, {{
-      text = _("Query EinkBro"),
-      enabled = yes,
-      callback = function()
-        android.dictLookup(obj.displayword, "info.plateaukao.einkbro", "text")
-        obj:onClose()
-      end,
-    }})
+    local isButtonInserted = false
+    for _, button in ipairs(buttons) do
+        if button.text == "Query EinkBro" then
+            isButtonInserted = true
+            break
+        end
     end
+    if not isButtonInserted and not obj.is_wiki then
+      table.insert(buttons, {
+          {
+              text = "Query EinkBro",
+              enabled = true,
+              callback = function()
+                  android.dictLookup(obj.displayword, "info.plateaukao.einkbro", "text")
+                  obj:onClose()
+              end,
+          }
+      })
+    end
+  end
 end
 
 return AskGPT
