@@ -62,7 +62,7 @@ function AskGPT:init()
   --   end
   local originalTweakButtonsFunc = DictQuickLookup.tweak_buttons_func
   DictQuickLookup.tweak_buttons_func = function(obj, buttons)
-    originalTweakButtonsFunc(obj, buttons)
+    if originalTweakButtonsFunc then originalTweakButtonsFunc(obj, buttons) end
     local isButtonInserted = false
     for _, button in ipairs(buttons) do
         if button.text == "Query EinkBro" then
