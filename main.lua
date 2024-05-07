@@ -4,7 +4,7 @@ local InputContainer = require("ui/widget/container/inputcontainer")
 local DictQuickLookup = require("ui/widget/dictquicklookup")
 local _ = require("gettext")
 
-local AskGPT = InputContainer:new {
+local AskEinkBro = InputContainer:new {
   name = "askeinkbro",
   is_doc_only = true,
 }
@@ -44,7 +44,7 @@ local doExternalDictLookup = function (self, text, method, callback)
   end
 end
 
-function AskGPT:init()
+function AskEinkBro :init()
   self.ui.highlight:addToHighlightDialog("askeinkbro", function(this)
     return {
       text = _("Query EinkBro"),
@@ -62,15 +62,8 @@ function AskGPT:init()
   --   end
   local originalTweakButtonsFunc = DictQuickLookup.tweak_buttons_func
   DictQuickLookup.tweak_buttons_func = function(obj, buttons)
-    if originalTweakButtonsFunc then originalTweakButtonsFunc(obj, buttons) end
-    local isButtonInserted = false
-    for _, button in ipairs(buttons) do
-        if button.text == "Query EinkBro" then
-            isButtonInserted = true
-            break
-        end
-    end
-    if not isButtonInserted and not obj.is_wiki then
+    -- originalTweakButtonsFunc(obj, buttons)
+    if not obj.is_wiki then
       table.insert(buttons, {
           {
               text = "Query EinkBro",
@@ -85,4 +78,4 @@ function AskGPT:init()
   end
 end
 
-return AskGPT
+return AskEinkBro
