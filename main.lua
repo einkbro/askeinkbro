@@ -45,12 +45,24 @@ local doExternalDictLookup = function (self, text, method, callback)
 end
 
 function AskEinkBro :init()
-  self.ui.highlight:addToHighlightDialog("askeinkbro", function(this)
+  self.ui.highlight:addToHighlightDialog("askeinkbro_basic", function(this)
     return {
-      text = _("Query EinkBro"),
+      text = _("EinkBro Word"),
       enabled = yes,
       callback = function()
         android.dictLookup(this.selected_text.text, "info.plateaukao.einkbro", "text")
+        this:onClose()
+      end,
+    }
+  end)
+  self.ui.highlight:addToHighlightDialog("askeinkbro_context", function(this)
+    prev_context, next_context = self.ui.highlight:getSelectedWordContext(10)
+    content = prev_context .. "<<" .. this.selected_text.text .. ">>" .. next_context
+    return {
+      text = _("EinkBro Context"),
+      enabled = yes,
+      callback = function()
+        android.dictLookup(content, "info.plateaukao.einkbro", "text")
         this:onClose()
       end,
     }
