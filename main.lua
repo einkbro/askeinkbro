@@ -44,7 +44,7 @@ local doExternalDictLookup = function (self, text, method, callback)
   end
 end
 
-function AskEinkBro :init()
+function AskEinkBro:init()
   self.ui.highlight:addToHighlightDialog("askeinkbro_basic", function(this)
     return {
       text = _("EinkBro Word"),
@@ -69,25 +69,20 @@ function AskEinkBro :init()
   end)
   Device.getExternalDictLookupList = getExternalDictLookupList
   Device.doExternalDictLookup = doExternalDictLookup
-  -- DictQuickLookup.onHoldClose = function(self) 
-  --   android.dictLookup(self.displayword, "info.plateaukao.einkbro", "text")
-  --   end
-  local originalTweakButtonsFunc = DictQuickLookup.tweak_buttons_func
-  DictQuickLookup.tweak_buttons_func = function(obj, buttons)
-    -- originalTweakButtonsFunc(obj, buttons)
-    if not obj.is_wiki then
-      table.insert(buttons, {
-          {
-              text = "Query EinkBro",
-              enabled = true,
-              callback = function()
-                  android.dictLookup(obj.word, "info.plateaukao.einkbro", "text")
-                  obj:onClose()
-              end,
-          }
-      })
-    end
-  end
+end
+
+function AskEinkBro:onDictButtonsReady(dict_popup, buttons)
+  table.insert(buttons, {
+      {
+          id = "einkbro",
+          text = "Query EinkBro",
+          enabled = true,
+          callback = function()
+              android.dictLookup(dict_popup.word, "info.plateaukao.einkbro", "text")
+              dict_popup:onClose()
+          end,
+      }
+  })
 end
 
 return AskEinkBro
