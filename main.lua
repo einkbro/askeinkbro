@@ -55,18 +55,20 @@ function AskEinkBro:init()
       end,
     }
   end)
-  self.ui.highlight:addToHighlightDialog("askeinkbro_context", function(this)
-    prev_context, next_context = self.ui.highlight:getSelectedWordContext(10)
-    content = prev_context .. "<<" .. this.selected_text.text .. ">>" .. next_context
-    return {
-      text = _("EinkBro Context"),
-      enabled = yes,
-      callback = function()
-        android.dictLookup(content, "info.plateaukao.einkbro", "text")
-        this:onClose()
-      end,
-    }
-  end)
+  if not self.document.is_pdf then
+    self.ui.highlight:addToHighlightDialog("askeinkbro_context", function(this)
+      local prev_context, next_context = self.ui.highlight:getSelectedWordContext(10)
+      local content = prev_context .. "<<" .. this.selected_text.text .. ">>" .. next_context
+      return {
+        text = _("EinkBro Context"),
+        enabled = yes,
+        callback = function()
+          android.dictLookup(content, "info.plateaukao.einkbro", "text")
+          this:onClose()
+        end,
+      }
+    end)
+  end
   Device.getExternalDictLookupList = getExternalDictLookupList
   Device.doExternalDictLookup = doExternalDictLookup
 end
